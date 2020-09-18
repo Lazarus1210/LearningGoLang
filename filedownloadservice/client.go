@@ -1,6 +1,10 @@
 package filedownloadservice
 
-import "net/http"
+import (
+	"context"
+	"net/http"
+	"time"
+)
 
 // HTTPClient interface
 type HTTPClient interface {
@@ -31,3 +35,33 @@ func newClient() *myClient {
 
 // default client that will be used will default properties
 var defaultClient = newClient()
+
+// Do sends a file transfer request and returns a file transfer response,
+// following policy (e.g. redirects, cookies, auth) as configured on the
+// client's HTTPClient.
+//
+// Like http.Get, Do blocks while the transfer is initiated, but returns as soon
+// as the transfer has started transferring in a background goroutine, or if it
+// failed early.
+//
+// An error is returned via Response.Err if caused by client policy (such as
+// CheckRedirect), or if there was an HTTP protocol or IO error. Response.Err
+// will block the caller until the transfer is completed, successfully or
+// otherwise.
+
+func (c *myClient) Do(req *myRequest) myResponse {
+	ctx, cancel := context.WithCancel(req.Context())
+	resp := &myResponse{
+		Request:    req,
+		Start:      time.Now(),
+		Filename:   req.Filename,
+		ctx:        ctx,
+		cancel:     cancel,
+		bufferSize: req.BufferSize,
+	}
+
+	if resp.bufferSize == 0 {
+		resp.bufferSize = c.bufferSize
+	}
+
+}

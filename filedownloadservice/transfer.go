@@ -2,8 +2,8 @@ package filedownloadservice
 
 import (
 	"context"
+	"filedownloadservice/mybps"
 	"io"
-	"mybps"
 )
 
 type transfer struct {

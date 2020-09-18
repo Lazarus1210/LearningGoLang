@@ -98,3 +98,17 @@ type myRequest struct {
 	// Context for cancellation and timeout - set via WithContext
 	ctx context.Context
 }
+
+//Context returns the request's context. To change the context, use
+// WithContext.The returned context is always non-nil; it defaults to the background
+// context.The context controls cancelation.
+
+// Learning : To create a context for any structure, just create a context method that belongs to this class or structure. Which means simplay write a method that takes this request structure as a reciever. Now any variable of this struct type will have access to all the data members and member functions implementing this struct. Hence they can invoke this method with . operator
+
+func (req *myRequest) Context() context.Context {
+	if req.ctx != nil { // if this request instance is already having a context then return the same context itself
+		return req.ctx
+	}
+	return context.Background()
+
+}
