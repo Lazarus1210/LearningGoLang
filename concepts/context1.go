@@ -25,7 +25,7 @@ func square(ctx context.Context) {
 }
 
 // main goroutine
-/*func main() {
+func main() {
 
 	// create cancellable context
 	//An empty context is a Context that has no value, no deadline and it’s never canceled. The context.Background() function returns a default empty Context. This Context is generally used to derive other context objects since it never cancels. It can also be used in test cases or merely to pass a context object to an API where custom context is not important.
@@ -47,5 +47,5 @@ func square(ctx context.Context) {
 
 	// print active goroutines
 	fmt.Println("Number of active goroutines", runtime.NumGoroutine())
-}*/
+}
 

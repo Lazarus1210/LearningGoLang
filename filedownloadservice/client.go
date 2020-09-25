@@ -65,31 +65,3 @@ func (c *myClient) Do(req *myRequest) myResponse {
 	}
 
 }
-
-// An stateFunc is an action that mutates the state of a Response and returns
-// the next stateFunc to be called.
-// Learning : this is one of the usage of closure. This function take myResponse as the argument and returns another
-// state function, thus forming a series of actions that can be taken.
-// Also, all the functions implement myClient struct, hence all these acceprt myClient as a reciever and are member functions of myclient struct. These can be inviked by any variable of of type myclient struct
-
-type stateFunc func(*myResponse) stateFunc
-
-// run calls the given stateFunc function and all subsequent returned stateFuncs
-// until a stateFunc returns nil or the Response.ctx is canceled.
-// Implements myClient, i.e takes this as a reciever. Can be invoked by any variable of myClient type
-// Each stateFunc
-// should mutate the state of the given Response until it has completed
-// downloading or failed.
-
-func (c *myClient) run(resp *myResponse, f stateFunc) stateFunc {
-	for {
-		select {
-		case <-resp.ctx.Done():
-			if resp.IsComplete() {
-				return
-			}
-			resp.err = resp.ctx.Err()
-
-		}
-	}
-}
