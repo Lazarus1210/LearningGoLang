@@ -91,3 +91,14 @@ type myResponse struct {
 	// This should not be read until IsComplete returns true.
 	err error
 }
+
+// IsComplete returns true if the download has completed. If an error occurred
+// during the download, it can be returned via Err.
+func (c *myResponse) IsComplete() bool {
+	select {
+	case <-c.Done:
+		return true
+	default:
+		return false
+	}
+}

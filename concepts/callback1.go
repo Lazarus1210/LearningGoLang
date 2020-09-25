@@ -35,9 +35,12 @@ func (c *Client) run(m *Mathematics, f stateFunc) {
 
 }
 
+//commenting main...uncomment to run it...
+
+/*
 func main() {
 	mainClient := &Client{4}
 	math := &Mathematics{1, 2, 3}
 	mainClient.run(math, mainClient.addition)
 
-}
+}*/
