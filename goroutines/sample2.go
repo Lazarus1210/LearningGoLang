@@ -21,6 +21,8 @@ func main() {
 	c <- 1                                    // main go routine blocked and waiting for some other go routine to send something on this channel
 	fmt.Println("after value received: main") // the above send on the channel will just unblock 1 go routine and exit
 	time.Sleep(2 * time.Second)
+	c <- 1
+	time.Sleep(2 * time.Second)
 	fmt.Printf("num of go routines : %d\n", runtime.NumGoroutine())
 }
 
@@ -60,6 +62,20 @@ go routine 2 spwaned
 after value received: main
 go routine 0 after channel unblock
 num of go routines : 5
+----------
+if we add more values to the channel more number of go routines will be unblocked and finish
+
+coding@codingplatform:~/GoWorkSpace/src/LearningGoLang/goroutines$ ./sample2
+I will make the go routines wait for something to be added to this channel
+go routine 3 spwaned
+go routine 2 spwaned
+go routine 0 spwaned
+go routine 4 spwaned
+go routine 1 spwaned
+after value received: main
+go routine 3 after channel unblock
+go routine 2 after channel unblock
+num of go routines : 4
 
 
 */
